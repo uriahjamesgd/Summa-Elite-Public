@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
+<title>Global Form Validation Script</title>
 
 <style type="text/css">
 body {margin:100px;font-family:Tahoma, Geneva, sans-serif;font-size:.75em;}
-.frmErr {font-family:Tahoma, Geneva, sans-serif;color:#ff0000;padding:3px 6px 3px 0;font-size:1em;line-height:1em;position:relative;display:inline;}
-.frmValid {font-family:Tahoma, Geneva, sans-serif;color:#390;padding:3px 6px 3px 0;font-size:1em;line-height:1em;font-weight:bold;position:relative;display:inline;}
+.frmErr {font-family:Tahoma, Geneva, sans-serif;color:#ff0000;padding:3px 6px 3px 0;font-size:1em;line-height:1em;position:absolute;margin-left:-12px;display:inline;}
+.frmValid {font-family:Tahoma, Geneva, sans-serif;color:#390;padding:3px 6px 3px 0;font-size:1em;line-height:1em;font-weight:bold;position:absolute;margin-left:-12px;display:inline;}
 .frmWarning {font-weight:bold;font-family:Tahoma, Geneva, sans-serif;color:#222222;padding:0 0;font-size:1.2em;line-height:1em;position:relative;z-index:100;display:inline-block;margin:15px 0;}
 .frmWarning_red {font-family:Tahoma, Geneva, sans-serif;color:#ff0000;font-size:2em;position:relative;top:6px;}
 .frmVictory {font-weight:bold;font-family:Tahoma, Geneva, sans-serif;color:#222222;padding:0 0;font-size:1.2em;line-height:1em;position:relative;z-index:100;display:inline-block;margin:15px 0;}
@@ -31,11 +31,16 @@ $(function () {  // Function | Execute after DOM has loaded
 	 * Dependencies: jquery.1.11.0  or older, jquery-ui.1.10.0 or older, Internal CSS Styles (included)
 	 */
 	var exe_frmValidate = function() {
+		
+		// Global Style Variables
+		var ico_err = "&#10006;";  // Big (✖) Symbol: Alert Error
+		var ico_val = "&#10004;";  // Big (✔) Symbol: Alert Valid
+		
 		// Validate Forms Function
 		var validateForms = function() {			
 			// Get Parent Form ID of Input Button
 			var button_id = $(this).attr('id');			
-			// Reset all instances of Error & Valid Classes
+			// Reset all instances of Error & Valid Classes @ event fire
 			$('.frmErr').remove();
 			$('.frmValid').remove();
 			$('.frmWarning').remove();
@@ -45,30 +50,30 @@ $(function () {  // Function | Execute after DOM has loaded
 			// Error check [form type=text]
             $("form#"+form_id+" > input[type=text]").each(function() {
 				if((this.value)==0) {
-					$(this).before('<span class="frmErr">&#10006;</span>');} 
+					$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
-					$(this).before('<span class="frmValid">&#10004;</span>');}
+					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });			
 			// Error check [form type=select]
             $("form#"+form_id+" > select").each(function() {
 				if ((this.value)==0) {
-                	$(this).before('<span class="frmErr">&#10006;</span>');} 
+                	$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
-					$(this).before('<span class="frmValid">&#10004;</span>');}
+					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });			
 			// Error check [form type=checkbox]
 			$("form#"+form_id+" > input[type=checkbox]").each(function() {
 				if ($("form#"+form_id+" > input[type=checkbox]:checked").length <= 0) {
-                	$(this).before('<span class="frmErr">&#10006;</span>');} 
+                	$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
-					$(this).before('<span class="frmValid">&#10004;</span>');}
+					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });			
 			// Error check [form type=radio]
 			$("form#"+form_id+" > input[type=radio]").each(function() {
 				if ($("form#"+form_id+" > input[type=radio]:checked").length <= 0) {
-                	$(this).before('<span class="frmErr">&#10006;</span>');} 
+                	$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
-					$(this).before('<span class="frmValid">&#10004;</span>');}
+					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });			
 			//  Count [form type=checkbox] if filled
 			var input_checkbox = $("form#"+form_id+" > input[type=checkbox]:checkbox:checked").length;
@@ -96,10 +101,10 @@ $(function () {  // Function | Execute after DOM has loaded
 			var count_total_inputs = ttl_select+ttl_text+ttl_radio+ttl_checkbox;			
 			// Header Error Message: Global Error Message
 			if (tallySelectedInputs !== count_total_inputs) {
-				$("form[id="+form_id+"]").before('<span class="frmWarning"><span class="frmWarning_red">&#10006;</span> Please fix the field(s) marked in RED below.</span>');}			
+				$("form[id="+form_id+"]").before('<span class="frmWarning"><span class="frmWarning_red">'+ico_err+'</span> Please fix the field(s) marked in RED below.</span>');}			
 			// Header Valid Message: Global Valid Message
 			if (tallySelectedInputs === count_total_inputs) {
-				$("form[id="+form_id+"]").before('<span class="frmVictory"><span class="frmVictory_green">&#10004;</span> You\'re good!</span>');}		
+				$("form[id="+form_id+"]").before('<span class="frmVictory"><span class="frmVictory_green">'+ico_val+'</span> You\'re good!</span>');}		
 			// Header Error Message: Highlight on Error Submit
 			$(".frmWarning").effect("highlight", {}, 3000);			
 			// Process if Tally selected equals total form inputs
@@ -124,18 +129,21 @@ $(function () {  // Function | Execute after DOM has loaded
 <body>
 
 <form method="post" id="myForm" action="https://www.google.com">
+
     <select>
       <option value="">Select</option>
       <option value="saab">Saab</option>
       <option value="mercedes">Mercedes</option>
       <option value="audi">Audi</option>
     </select><br/>
+    
     <select>
       <option value="">Select</option>
       <option value="saab">Saab</option>
       <option value="mercedes">Mercedes</option>
       <option value="audi">Audi</option>
     </select><br/>
+    
     <input type="text" value="" /><br/>
     <input type="text" value="" /><br/>
     <input type="text" value="" /><br/>
@@ -153,7 +161,6 @@ $(function () {  // Function | Execute after DOM has loaded
 </form>
 
 <br/><br/><br/><br/><br/><br/><br/><br/>
-
 
 <form method="post" id="somethingFrm" action="https://www.yahoo.com">
     <select>
