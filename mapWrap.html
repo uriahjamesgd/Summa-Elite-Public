@@ -1,0 +1,121 @@
+<style>
+/**
+ * Map Marker Styles
+ */
+.mapwrap {
+    display:inline-block;
+    position:fixed;
+    z-index:9999999999;
+    top:100px;
+    left:25px;
+}
+.mapwrap ul,
+.mapwrap ul li,
+.mapwrap ul li a {
+    margin:0;
+    padding:0;
+    line-height:0;
+}
+.mapwrap ul li {
+    position:relative;
+    display:block;
+    width:14px;
+    height:14px;
+    margin-bottom:8px;
+}
+.mapwrap ul li a span {
+    display:inline-block;
+    width:14px;
+    height:14px;
+    background:rgba(0,0,0,.08);
+    border-radius:10px;
+    border:2px solid #dddddd;
+}
+.mapwrap ul li a span:hover {
+    display:inline-block;
+    width:14px;
+    height:14px;
+    background:rgba(0,0,0,.1);
+    border-radius:10px;
+    border:2px solid #cccccc;
+}
+.mapwrap ul li a span.map_pin {
+    width:14px;
+    height:14px;
+    background:rgba(255, 0, 102, .08);
+    border-radius:10px;
+    border:2px solid rgba(255, 0, 102, .1);
+}
+</style>
+
+
+<!-- Map Wrap (have as many sectB as needed) -->
+<div class="mapwrap">
+    <ul>
+        <li><a id="sectB1"><span></span></a></li>
+        <li><a id="sectB2"><span></span></a></li>
+        <li><a id="sectB3"><span></span></a></li>
+        <li><a id="sectB4"><span></span></a></li>
+        <li><a id="sectB5"><span></span></a></li>
+        <li><a id="sectB6"><span></span></a></li>
+    </ul>
+</div>
+
+
+<!-- Location Hooks (have as many sect as needed) -->
+<a class="location" id="sect1"></a>
+<a class="location" id="sect2"></a>
+<a class="location" id="sect3"></a>
+<a class="location" id="sect4"></a>
+<a class="location" id="sect5"></a>
+<a class="location" id="sect6"></a>
+
+
+<!-- Vendor JS -->l
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script src="/js/vendor/waypoints.js"></script>
+
+
+<script type="text/javascript">
+$(function(){
+
+            (function navmap() {
+                /**
+                 * App: Map Marker Animates to Location: @ Auto-Invocation
+                 * Dependencies: jQuery.js, jQuery.UI.js, Waypoints.js, [CSS, HTML]
+                 * Author: Uriah James Rittenhouse
+                 * Date: 06.11.2014
+                 */
+                // Nav Map - if Clicked - Add/Remove Active Class
+                $('.mapwrap ul li a span').on('click', function(){
+                    $('.mapwrap ul li a span').removeClass('map_pin');
+                    $(this).addClass('map_pin');
+                });
+                // Nav Map - if Scrolled - Add/Remove Active Class
+                $('.location').waypoint(function(direction) {
+                    var wid = $(this).attr("id");
+                    var navid = wid[0] + wid[1] + wid[2] + wid[3] + "B" + wid[4];
+                    var navidPrev = wid[0] + wid[1] + wid[2] + wid[3] + "B" + (wid[4]-1);
+                    if (direction === 'down') {
+                        $("li a#" + navidPrev + " span").removeClass("map_pin");
+                        $("li a#" + navid + " span").addClass("map_pin");
+                    } else {
+                        $("li a#" + navid + " span").removeClass("map_pin");
+                        $("li a#" + navidPrev + " span").addClass("map_pin");
+                    }
+                }, {
+                    offset: '100%'
+                });
+                // Nav Location - Clicked - Animate to Location (Maintain 1:1 Ratio of Map to Location)
+                $(".mapwrap ul li a").click(function(){
+                    var thisId = $(this).attr('id');
+                    var navidNoB = thisId[0] + thisId[1] + thisId[2] + thisId[3] + thisId[5];
+                    $("html,body").animate({
+                        scrollTop:$("#"+navidNoB).offset().top
+                    },"1000").effect( "easeOutBounce", "slow" );return false
+                });
+            })();
+
+        });
+</script>
