@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Untitled Document</title>
+    <link href="/css/animate.css" media="screen, projection" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            margin: 100px;
+        }
+
+        .task_onClick_a1,
+        .task_onHover_b2,
+        .task_onDomLd_c3,
+        .moveOne,
+        .moveTwo {
+            -webkit-transition:all 0.2s ease-in;
+            -moz-transition:all 0.2s ease-in;
+            -khtml-transition:all 0.2s ease-in;
+            -o-transition:all 0.2s ease-in;
+            transition:all 0.2s ease-in;
+        }
+
+        .task_wrap {
+            display:block;
+            position:relative;
+            left:0;
+            top:0;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            background-color: #ffff00;
+            color:#ffffff;
+            font-family:arial, sans-serif;
+            font-size:10px;
+            text-align:center;
+        }
+        .task_onClick_a1 {
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            width: 100px;
+            height: 100px;
+            background-color: #b81900;
+            color:#ffffff;
+            font-family:arial, sans-serif;
+            font-size:10px;
+            text-align:center;
+        }
+
+        .task_onHover_b2 {
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            width: 100px;
+            height: 100px;
+            background-color: #b81900;
+            color:#ffffff;
+            font-family:arial, sans-serif;
+            font-size:10px;
+            text-align:center;
+        }
+
+        .task_onDomLd_c3 {
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            width: 100px;
+            height: 100px;
+            background-color: #b81900;
+            color:#ffffff;
+            font-family:arial, sans-serif;
+            font-size:10px;
+            text-align:center;
+        }
+
+        .moveOne {
+            left:100px;
+        }
+        .moveTwo {
+            left:300px;
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body>
+
+<script>
+    $(function () {
+
+        /**
+         * Module Name: Animation Class Queue:
+         * Parent App: Summa Elite (https://github.com/uriahjamesgd/Summa-Elite-Public)
+         * Author: Uriah Rittenhouse (www.stonefish-web-guru.com | www.biglemonade.com)
+         * Released: 05.29.2014
+         * License: (MIT License) This content is released under the MIT License.
+         * Dependencies: jquery.1.11.0 or older, animate.css, Internal CSS Styles (included)
+         */
+        
+        /**
+         * task Schedulers
+         * 1000 milliseconds = 1 second && 60000 milliseconds = 1 minute
+         */
+        var task_onClick_a1 = [
+            {100: '+lightSpeedIn'},
+            {600: '-lightSpeedIn'},
+            {100: '+tada'},
+            {800: '-tada'},
+            {100: '+pulse'},
+            {1000: '-pulse'},
+            {1000: '+moveOne'},
+            {1000: '+moveTwo'},
+            {1000: '-moveTwo'},
+            {1000: '-moveOne'}
+        ];
+        var task_onHover_b2 = [
+            {100: '+lightSpeedIn'},
+            {600: '-lightSpeedIn'},
+            {100: '+tada'},
+            {800: '-tada'},
+            {100: '+pulse'},
+            {1000: '-pulse'},
+            {1000: '+moveOne'},
+            {1000: '+moveTwo'},
+            {1000: '-moveTwo'},
+            {1000: '-moveOne'}
+        ];
+        var task_onDomLd_c3 = [
+            {100: '+lightSpeedIn'},
+            {600: '-lightSpeedIn'},
+            {100: '+tada'},
+            {800: '-tada'},
+            {100: '+pulse'},
+            {1000: '-pulse'},
+            {1000: '+moveOne'},
+            {1000: '+moveTwo'},
+            {1000: '-moveTwo'},
+            {1000: '-moveOne'}
+        ];
+
+
+        (function task_onClick() {
+            /**
+             * task_onClick Event
+             */
+            $("[class*='task_onClick']").on('click', function () {
+                var o = $(this); var c = eval(o.attr("class").match(/(task_onClick_.*?)(?:\s+|$)/)[1]); var r = c.slice(0); var n = o.attr("class").match(/(task_onClick_.*?)(?:\s+|$)/)[1];
+                function b(i, l) {var s = JSON.stringify(i); var k = s.match(/"(.*?)"/); var v = s.split(':')[1]; var m = v.slice(1, -2); if (m.indexOf('+') >= 0) {var p = m.slice(1); setTimeout(function () {$('.' + n).addClass(p); l();}, k[1]);} else if (m.indexOf('-') >= 0) {var g = m.slice(1); setTimeout(function () {$('.' + n).removeClass(g); l();}, k[1]);}}
+                function a(l) {if (r.length == 0) {l();} else {b(r[0], function () {r.splice(0, 1); a(l);})}}
+                a(function () {});
+            });
+        })();
+
+        (function task_onHover() {
+            /**
+             * task_onHover Event
+             */
+            $("[class*='task_onHover']").mouseover(function () {
+                var o = $(this); var c = eval(o.attr("class").match(/(task_onHover_.*?)(?:\s+|$)/)[1]); var r = c.slice(0); var n = o.attr("class").match(/(task_onHover_.*?)(?:\s+|$)/)[1];
+                function b(i, l) {var s = JSON.stringify(i); var k = s.match(/"(.*?)"/); var v = s.split(':')[1]; var m = v.slice(1, -2); if (m.indexOf('+') >= 0) {var p = m.slice(1); setTimeout(function () {$('.' + n).addClass(p); l();}, k[1]);} else if (m.indexOf('-') >= 0) {var g = m.slice(1); setTimeout(function () {$('.' + n).removeClass(g); l();}, k[1]);}}
+                function a(l) {if (r.length == 0) {l();} else {b(r[0], function () {r.splice(0, 1); a(l);})}}
+                a(function () {});
+            });
+        })();
+
+        (function task_onDomLd() {
+            $(document).ready(function () {
+                /**
+                 * task_onDomLd Event
+                 */
+                var o = $("[class*='task_onDomLd']"); var c = eval(o.attr("class").match(/(task_onDomLd_.*?)(?:\s+|$)/)[1]); var r = c.slice(0); var n = o.attr("class").match(/(task_onDomLd_.*?)(?:\s+|$)/)[1];
+                function b(i, l) {var s = JSON.stringify(i); var k = s.match(/"(.*?)"/); var v = s.split(':')[1]; var m = v.slice(1, -2); if (m.indexOf('+') >= 0) {var p = m.slice(1); setTimeout(function () {$('.' + n).addClass(p); l();}, k[1]);} else if (m.indexOf('-') >= 0) {var g = m.slice(1); setTimeout(function () {$('.' + n).removeClass(g); l();}, k[1]);}}
+                function a(l) {if (r.length == 0) {l();} else {b(r[0], function () {r.splice(0, 1); a(l);})}}
+                a(function () {});
+            });
+        })();
+
+
+    });
+</script>
+
+<div class="task_wrap">
+    <div class="task_onClick_a1 animated">One</div>
+</div>
+
+<div class="task_wrap">
+    <div class="task_onHover_b2 animated">Two</div>
+</div>
+
+<div class="task_wrap">
+    <div class="task_onDomLd_c3 animated">Three</div>
+</div>
+
+</body>
+</html>
