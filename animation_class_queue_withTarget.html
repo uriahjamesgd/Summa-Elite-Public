@@ -243,7 +243,7 @@
              */
             {
                 if ($('div').hasClass('activec')) {
-                    var ActiveC = $('div').attr('class');
+                    var ActiveC = $('div').attr('class').split(' ')[0];
                     alert(ActiveC);
                 }
                 else {
@@ -262,7 +262,7 @@
     });
 </script>
 
-<div class="duddy animated"></div>
+<div class="task_onActiveC_animation0 duddy animated"></div>
 <div class="task_onClick_animation1 animated">Value added to this div.</div>
 <div class="task_onHover_animation2 animated">Value added to this div.</div>
 <div class="task_onDomLd_animation3 animated">Value added to this div.</div>
