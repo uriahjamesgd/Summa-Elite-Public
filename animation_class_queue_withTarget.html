@@ -99,7 +99,6 @@ $(function () {
     ];
 
     (function task_onClick() {
-
         /**
          * task_onClick Event
          */
@@ -128,7 +127,6 @@ $(function () {
                     }, key);
                 }
             }
-
             function loopThroughArgs(callback) {
                 if (returnArrayTasks.length == 0) {
                     callback();
@@ -140,7 +138,6 @@ $(function () {
                     })
                 }
             }
-
             loopThroughArgs(function () {
             });
         });
@@ -176,7 +173,6 @@ $(function () {
                     }, key);
                 }
             }
-
             function loopThroughArgs(callback) {
                 if (returnArrayTasks.length == 0) {
                     callback();
@@ -188,7 +184,6 @@ $(function () {
                     })
                 }
             }
-
             loopThroughArgs(function () {
             });
         });
@@ -202,7 +197,6 @@ $(function () {
             var object = $("[class*='task_onDomLd']");
             var cloneReturnArrayTasks = eval(object.attr("class").match(/(task_onDomLd_.*?)(?:\s+|$)/)[1]);
             var returnArrayTasks = cloneReturnArrayTasks.slice(0);
-
             function asyncFunc(i, callback) {
                 var stringify = JSON.stringify(i);
                 var target = stringify.match(/"(.*?)"/);
@@ -224,7 +218,6 @@ $(function () {
                     }, key);
                 }
             }
-
             function loopThroughArgs(callback) {
                 if (returnArrayTasks.length == 0) {
                     callback();
@@ -236,7 +229,6 @@ $(function () {
                     })
                 }
             }
-
             loopThroughArgs(function () {
             });
         })();
@@ -244,11 +236,10 @@ $(function () {
 
 
 
-    (function task_onActiveC()
-    /**
-     * task_onActiveC Event
-     */
-    {
+    (function task_onActiveC() {
+        /**
+         * task_onActiveC Event
+         */
         if ($('div').hasClass('activec')) {
             var object = $('div').attr('class').split(' ')[0];
             var cloneReturnArrayTasks = eval(object);
