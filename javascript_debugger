@@ -47,6 +47,18 @@ body {
 $(function () {  // Function | Execute after DOM has loaded
 // ********************************************************
 
+/*
+
+I want to insert within the javascript its-self a printToScreen() statement after each variable line, 
+followed by an exit(); staement. Linearly I want to continue through the javascript file, removing each exit();
+statement after it successfully prints to screen and continuing on. If nothing prints to screen, then the exit();
+statement remains intact within the javascript, indicating where the processing haulted and more importanly,
+where the problem lies within the javascript being checked/debugged.
+
+
+*/
+
+
 	$('.content:not(.focus)').keyup(function(){												
 		var value = $(this).val();
 		var contentAttr = $(this).attr('name');
