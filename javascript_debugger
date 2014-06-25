@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+</script>
+
+<style>
+body {
+	margin:50px;
+}
+.content {
+	border:1px solid #666666;
+	padding:15px;
+	margin:0;
+	float:left;
+	width:45%;
+	height:400px;
+}
+.mas {
+	border:1px solid #666666;
+	padding:15px;
+	margin:0 0 0 15px;
+	float:left;	
+	width:45%;
+	height:400px;
+}
+</style>
+
+</head>
+
+<body>
+
+<textarea id="textarea" name="mas" rows="15" class="content"></textarea>
+
+<div class="mas" >Output here...</div>
+
+
+
+<script type="text/javascript">
+// ********************************************************
+$(function () {  // Function | Execute after DOM has loaded
+// ********************************************************
+
+	$('.content:not(.focus)').keyup(function(){												
+		var value = $(this).val();
+		var contentAttr = $(this).attr('name');
+		$('.'+contentAttr+'').html(value);
+	});
+	
+	$("#textarea").on('change paste', function() {
+		var textarea = $('textarea#textarea').val();
+		if(textarea.indexOf('\;') !== -1) {
+			//alert("Keyword 'var' detected!");
+			//$("#textarea").val($("#textarea").val().replace(/\;/g, "\; \nexit\(\)\;\n"));
+			
+			/**
+			 * Finds Var and returns full line
+			 */
+			var fullVar = textarea.match(/var(.*?)\;/i)[1]; // Searches: Begins with 'var' and Ends with ';'
+			var fullVarWhole = 'var ' + fullVar + '\;';
+			var trimToNazmeOnly = fullVar.replace(/^\s/, '').split(' ')[0];
+			$('.mas').html(fullVarWhole);
+			
+			/**
+			 * Inject alert into textarea that contains var name from retrieved var line
+			 */
+			//alert(trimToNazmeOnly);
+			var alertInsert = "alert\('"+trimToNazmeOnly+"\')\;";
+			$("#textarea").val($("#textarea").val().replace(/\;/g, "\;\n"+alertInsert+"\n"));
+			
+		}
+	});
+// ********************************************************
+});  // END - Function | Execute after DOM has loaded
+// ********************************************************
+</script>
+
+
+</body>
+</html>
