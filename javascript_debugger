@@ -96,3 +96,103 @@ where the problem lies within the javascript being checked/debugged.
 
 </body>
 </html>
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+
+<style>
+body {
+	margin:50px;
+}
+.iStream {
+	border:1px solid #666666;
+	padding:15px;
+	margin:0;
+	float:left;
+	width:45%;
+	height:400px;
+}
+.oStream {
+	border:1px solid #666666;
+	padding:15px;
+	margin:0 0 0 15px;
+	float:left;	
+	width:45%;
+	height:400px;
+}
+</style>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+</head>
+
+<body>
+
+<textarea id="iTextarea" name="iStream" rows="15" class="iStream">
+<script>
+	var foo_bar = "Hello World!";
+	var he_ha = "He Ha!";
+	var uriah = "Rittenhouse";
+	var rittenhouse = "Uriah";
+</script>
+</textarea>
+
+<div class="oStream" ></div>
+
+<br/>
+
+<button id="triggerFill" type="button"><b>Fill</b> <span style="color:#aaaaaa;">(Inject Unit Tests)</span></button>
+<button id="triggerFlush" type="button"><b>Flush</b> <span style="color:#aaaaaa;">(Remove Injected Unit Tests)</span></button>
+
+<script type="text/javascript">
+// ********************************************************
+$(function () {  // Function | Execute after DOM has loaded
+// ********************************************************
+
+	// (Flush) De'bug Injector
+	$('#triggerFlush').click(function() {
+		$('.oStream').empty().html("When you're ready, and your new code is in place, select the 'Fill' button.");
+	});
+	
+	// (Fill) De'bug Injector
+	$('#triggerFill').click(function() {
+		// Clear Output stage
+		$('.oStream').empty();
+		
+		// Get data from textarea
+		var textarea = $('textarea#iTextarea').val();
+		// Find all instances of "var...;"
+		var regex = new RegExp('var(.*?);', 'gi');
+		var count = textarea.match(regex);
+		
+		// Store all occurances as array
+		var storeIt = [];
+		
+		// Loop through var collection
+		for (i=0;i<count.length;i++) {
+			// Output full var line
+			$('.oStream').append(count[i]+'<br/>');
+			
+			// Push occurances to array
+			
+			// Trim to var name only and format for injection
+			var trimToNameOnly = count[i].replace(/^\s/, '').split(' ')[1];
+			$('.oStream').append("alert\('"+trimToNameOnly+"\')\;<br/>");
+		}
+	});
+	
+// ********************************************************
+});  // END - Function | Execute after DOM has loaded
+// ********************************************************
+</script>
+
+</body>
+</html>
