@@ -229,3 +229,270 @@
 
 </body>
 </html>
+
+
+
+#############################################################################################
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Untitled Document</title>
+
+    <style>
+        body {
+            margin: 50px;
+        }
+
+        .iStream {
+            border: 1px solid #666666;
+            padding: 15px;
+            margin: 0;
+            float: left;
+            width: 45%;
+            height: 400px;
+        }
+
+        .oStream {
+            border: 1px solid #666666;
+            padding: 15px;
+            margin: 0 0 0 15px;
+            float: left;
+            width: 45%;
+            height: 400px;
+        }
+
+        .utwrap {
+            display: inline-block;
+            float: left;
+            width: 88%;
+        }
+
+        h3.utH3 {
+            display: block;
+            color: #339900;
+            font-size: 1.2em;
+            line-height: 10px;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-family: Tahoma, Geneva, sans-serif;
+        }
+
+        #utf {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ffffff;
+            color: #339900;
+            border: 1px solid #339900;
+            font-size: 1.2em;
+            font-family: Tahoma, Geneva, sans-serif;
+            margin: 0 10px 10px 10px;
+        }
+
+        #utv {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ffffff;
+            color: #339900;
+            border: 1px solid #339900;
+            font-size: 1.2em;
+            font-family: Tahoma, Geneva, sans-serif;
+            margin: 0 10px 10px 10px;
+        }
+
+        #utf span,
+        #utv span {
+            display: inline-block;
+            float: left;
+            clear: both;
+        }
+
+        #utf span:last-child:after,
+        #utv span:last-child:after {
+            display: block;
+            content: 'Terminated...';
+            color: red;
+            font-weight: bold;
+        }
+
+        #utf span:before,
+        #utv span:before {
+            content: '✔';
+            color: #339900;
+            font-weight: bold;
+            padding-right: 10px;
+        }
+
+        .pass {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .fail {
+            content: 'FAIL: ';
+            color: red;
+            font-weight: bold;
+
+        }
+    </style>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+</head>
+
+<body>
+<h1>Plumb Javascript (check the pipes)</h1>
+<h3>Checks for clogs in pipes (threads) and indicates bottlenecks</h3>
+<textarea id="iTextarea" name="oStream" rows="15" class="iStream">
+<script>
+  var these_are = "placeholder";
+  var variables_that = 100;
+  var developers = "ddd";
+  var go_ahead = "and change them as you see fit.";
+</script>
+</textarea>
+
+<div class="oStream">
+    <div class="utwrap">
+        <h3 class="utH3">Call: Functions</h3>
+        <div id="utf"></div>
+    </div>
+
+    <div class="utwrap">
+        <h3 class="utH3">Call: Variables</h3>
+        <div id="utv"></div>
+    </div>
+</div>
+
+<br/>
+
+<button id="triggerFill" type="button"><b>Fill</b> <span style="color:#aaaaaa;">(Inject Unit Tests)</span></button>
+<button id="triggerFlush" type="button"><b>Flush</b> <span style="color:#aaaaaa;">(Remove Injected Unit Tests)</span></button>
+<input type="file" id="fileChooser">
+
+<script type="text/javascript">
+    // ********************************************************
+    $(function () { // Function | Execute after DOM has loaded
+    // ********************************************************
+			
+			window.setInterval(function(){
+			  /// call your function here
+				//$("textarea#iTextarea").val($("textarea#iTextarea").val().replace("exit();\n\n",""));
+			}, 500);
+	
+			// Load local Javascript file for view
+			document.getElementById('fileChooser').onchange = function () {
+				var file = this.files[0];
+				var reader = new FileReader();
+				reader.readAsText(file);
+				reader.onload = function () {
+					document.getElementById('iTextarea').value = "\<script\>\n" + this.result + "\n\<\/script\>";
+				};
+			};
+
+            // Unit Test Function
+            function utf() {
+                if(this) {
+                    document.getElementById('utf').innerHTML += "<span>Function " + arguments.callee.caller.name + "</span>";
+                } else {
+                    exit();
+                }
+            }
+
+            // Unit Test Variable
+            function utv(utv,utv1) {
+                if(utv1) {
+                    document.getElementById('utv').innerHTML += "<span>var " + utv + " = " + utv1 + "</span>";
+                } else {
+                    exit();
+                }
+            }
+
+
+        // (Flush) De'bug Injector
+        $('#triggerFlush').click(function () {
+            $('#utv').empty().html("");
+			// Remove all injected nodes on exit
+            var regexTwo = new RegExp('utv(.*?);', 'gi');
+            var regexThree = new RegExp('function(.*?)\}\}', 'gi');
+			var regexExitRemove = new RegExp('exit(.*?);', 'gi');
+            $("textarea#iTextarea").val($("textarea#iTextarea").val().replace(regexThree, "").replace(regexExitRemove, "").replace(regexTwo, "").replace(/ +(?= )/i, '').replace(/\n+/g, '\n'));
+        });
+
+        // (Fill) De'bug Injector
+        $('#triggerFill').click(function () {
+            // Clear Output stage
+            $('#utv').empty();
+
+            // Get data from textarea
+            var textarea = $('textarea#iTextarea').val();
+            // Find all instances of "var...;"
+            var regex = new RegExp('var(.*?);', 'gi');
+            var count = textarea.match(regex);
+
+            // Inject Helper Function
+            var functHelper = 'function utv(utv, utv1) {' +
+                    'if (utv1) {' +
+                    '\document\.getElementById\(\'utv\'\).innerHTML += "\<span\>var " + utv + " = " + utv1 + "</span>";' +
+                    '} else {' +
+                    'return false;' +
+                    '}' +
+                    '}\n';
+            $("textarea#iTextarea").val($("textarea#iTextarea").val().replace(/\<script\>/g, "\<script\>\n" + functHelper));
+
+
+            // Loop through var collection
+            for (i = 0; i < count.length; i++) {
+                // Trim to var name only and format for injection
+                var trimToNameOnly = count[i].replace(/^\s/, '').split(' ')[1];
+                var alertInsert = "utv\(\"" + trimToNameOnly + "\"," + trimToNameOnly + ")\;\n";
+                $("textarea#iTextarea").val($("textarea#iTextarea").val().replace(count[i], count[i] + "\n" +  alertInsert + "\nexit();\n"));
+				// Format remove injected utv() and exit() nodes
+				var regexUTVRemove = new RegExp('utv("'+trimToNameOnly+'",'+trimToNameOnly+');', 'gi');
+				
+				$('#utv').append("<span>" + count[i] + "</span><br/>");
+				
+				$("textarea#iTextarea").val($("textarea#iTextarea").val().replace("exit();\n\n",""));
+            }
+			
+            // Execute real-time preview of javascript (after dom injection of debuggers)
+            /*var value = $('.iStream').val();
+			var contentAttr = $('.iStream').attr('name');
+			$('.'+contentAttr+'').append(value);*/
+
+            // Remove all injected nodes on exit
+            var regexTwo = new RegExp('utv(.*?);', 'gi');
+            var regexThree = new RegExp('function(.*?)\}\}', 'gi');
+			var regexExitRemove = new RegExp('exit(.*?);', 'gi');
+            $("textarea#iTextarea").val($("textarea#iTextarea").val().replace(regexThree, "").replace(regexExitRemove, "").replace(regexTwo, "").replace(/ +(?= )/i, '').replace(/\n+/g, '\n'));
+			
+        });
+
+			/*
+			1.) Outside Head of Loop
+				a.) Inject helper function right after <script> tag
+				b.) Identify all instances of "var...;" in textarea Javascript and format ARRAY
+			2.) Inside Loop
+				a.) Pull first instance of "var..;" from array; format into helper method "utv(one,two);"
+				b.) Inject helper method and exit(); statement directly after associated var line
+				c.) Allow injected code to reflect its output in oStream.
+				d.) Test if oStream reflected output came through, and if TRUE, then continue through LOOP, ELSE exit.
+				e.) Remove injected code "utv() && exit()" and continue through loop.
+			3.) Outside Foot of Loop
+				a.) Remove injected helper function and terminate script.
+			*/
+    // ********************************************************
+    }); // END - Function | Execute after DOM has loaded
+    // ********************************************************
+</script>
+
+</body>
+</html>
+
