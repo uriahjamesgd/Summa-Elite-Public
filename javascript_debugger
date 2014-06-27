@@ -1,197 +1,214 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Untitled Document</title>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <style>
+        body {
+            margin: 50px;
+        }
 
-<script type="text/javascript">
-</script>
+        .iStream {
+            border: 1px solid #666666;
+            padding: 15px;
+            margin: 0;
+            float: left;
+            width: 45%;
+            height: 400px;
+        }
 
-<style>
-body {
-	margin:50px;
-}
-.content {
-	border:1px solid #666666;
-	padding:15px;
-	margin:0;
-	float:left;
-	width:45%;
-	height:400px;
-}
-.mas {
-	border:1px solid #666666;
-	padding:15px;
-	margin:0 0 0 15px;
-	float:left;	
-	width:45%;
-	height:400px;
-}
-</style>
+        .oStream {
+            border: 1px solid #666666;
+            padding: 15px;
+            margin: 0 0 0 15px;
+            float: left;
+            width: 45%;
+            height: 400px;
+        }
+
+        .utwrap {
+            display: inline-block;
+            float: left;
+            width: 88%;
+        }
+
+        h3.utH3 {
+            display: block;
+            color: #339900;
+            font-size: 1.2em;
+            line-height: 10px;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-family: Tahoma, Geneva, sans-serif;
+        }
+
+        #utf {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ffffff;
+            color: #339900;
+            border: 1px solid #339900;
+            font-size: 1.2em;
+            font-family: Tahoma, Geneva, sans-serif;
+            margin: 0 10px 10px 10px;
+        }
+
+        #utv {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ffffff;
+            color: #339900;
+            border: 1px solid #339900;
+            font-size: 1.2em;
+            font-family: Tahoma, Geneva, sans-serif;
+            margin: 0 10px 10px 10px;
+        }
+
+        #utf span,
+        #utv span {
+            display: inline-block;
+            float: left;
+            clear: both;
+        }
+
+        #utf span:last-child:after,
+        #utv span:last-child:after {
+            display: block;
+            content: 'Terminated...';
+            color: red;
+            font-weight: bold;
+        }
+
+        #utf span:before,
+        #utv span:before {
+            content: '✔';
+            color: #339900;
+            font-weight: bold;
+            padding-right: 10px;
+        }
+
+        .pass {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .fail {
+            content: 'FAIL: ';
+            color: red;
+            font-weight: bold;
+
+        }
+    </style>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 </head>
 
 <body>
 
-<textarea id="textarea" name="mas" rows="15" class="content"></textarea>
-
-<div class="mas" >Output here...</div>
-
-
-
-<script type="text/javascript">
-// ********************************************************
-$(function () {  // Function | Execute after DOM has loaded
-// ********************************************************
-
-/*
-
-I want to insert within the javascript its-self a printToScreen() statement after each variable line, 
-followed by an exit(); staement. Linearly I want to continue through the javascript file, removing each exit();
-statement after it successfully prints to screen and continuing on. If nothing prints to screen, then the exit();
-statement remains intact within the javascript, indicating where the processing haulted and more importanly,
-where the problem lies within the javascript being checked/debugged.
-
-
-*/
-
-
-	$('.content:not(.focus)').keyup(function(){												
-		var value = $(this).val();
-		var contentAttr = $(this).attr('name');
-		$('.'+contentAttr+'').html(value);
-	});
-	
-	$("#textarea").on('change paste', function() {
-		var textarea = $('textarea#textarea').val();
-		if(textarea.indexOf('\;') !== -1) {
-			//alert("Keyword 'var' detected!");
-			//$("#textarea").val($("#textarea").val().replace(/\;/g, "\; \nexit\(\)\;\n"));
-			
-			/**
-			 * Finds Var and returns full line
-			 */
-			var fullVar = textarea.match(/var(.*?)\;/i)[1]; // Searches: Begins with 'var' and Ends with ';'
-			var fullVarWhole = 'var ' + fullVar + '\;';
-			var trimToNazmeOnly = fullVar.replace(/^\s/, '').split(' ')[0];
-			$('.mas').html(fullVarWhole);
-			
-			/**
-			 * Inject alert into textarea that contains var name from retrieved var line
-			 */
-			//alert(trimToNazmeOnly);
-			var alertInsert = "alert\('"+trimToNazmeOnly+"\')\;";
-			$("#textarea").val($("#textarea").val().replace(/\;/g, "\;\n"+alertInsert+"\n"));
-			
-		}
-	});
-// ********************************************************
-});  // END - Function | Execute after DOM has loaded
-// ********************************************************
-</script>
-
-
-</body>
-</html>
-
-
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
-
-<style>
-body {
-	margin:50px;
-}
-.iStream {
-	border:1px solid #666666;
-	padding:15px;
-	margin:0;
-	float:left;
-	width:45%;
-	height:400px;
-}
-.oStream {
-	border:1px solid #666666;
-	padding:15px;
-	margin:0 0 0 15px;
-	float:left;	
-	width:45%;
-	height:400px;
-}
-</style>
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
-</head>
-
-<body>
-
-<textarea id="iTextarea" name="iStream" rows="15" class="iStream">
-<script>
-	var foo_bar = "Hello World!";
-	var he_ha = "He Ha!";
-	var uriah = "Rittenhouse";
-	var rittenhouse = "Uriah";
-</script>
+<textarea id="iTextarea" name="oStream" rows="15" class="iStream">
+    <script>
+        var foo_bar = "Hello World!";
+        var he_ha = "He Ha!";
+        var uriah = "Rittenhouse";
+        var rittenhouse = "Uriah";
+    </script>
 </textarea>
 
-<div class="oStream" ></div>
+<div class="oStream">
+    <div class="utwrap">
+        <h3 class="utH3">Call: Functions</h3>
+        <div id="utf"></div>
+    </div>
+
+    <div class="utwrap">
+        <h3 class="utH3">Call: Variables</h3>
+        <div id="utv"></div>
+    </div>
+</div>
 
 <br/>
 
 <button id="triggerFill" type="button"><b>Fill</b> <span style="color:#aaaaaa;">(Inject Unit Tests)</span></button>
-<button id="triggerFlush" type="button"><b>Flush</b> <span style="color:#aaaaaa;">(Remove Injected Unit Tests)</span></button>
+<button id="triggerFlush" type="button"><b>Flush</b> <span style="color:#aaaaaa;">(Remove Injected Unit Tests)</span>
+</button>
 
 <script type="text/javascript">
-// ********************************************************
-$(function () {  // Function | Execute after DOM has loaded
-// ********************************************************
+    // ********************************************************
+    $(function () { // Function | Execute after DOM has loaded
+    // ********************************************************
 
-	// (Flush) De'bug Injector
-	$('#triggerFlush').click(function() {
-		$('.oStream').empty().html("When you're ready, and your new code is in place, select the 'Fill' button.");
-	});
-	
-	// (Fill) De'bug Injector
-	$('#triggerFill').click(function() {
-		// Clear Output stage
-		$('.oStream').empty();
-		
-		// Get data from textarea
-		var textarea = $('textarea#iTextarea').val();
-		// Find all instances of "var...;"
-		var regex = new RegExp('var(.*?);', 'gi');
-		var count = textarea.match(regex);
-		
-		// Store all occurances as array
-		var storeIt = [];
-		
-		// Loop through var collection
-		for (i=0;i<count.length;i++) {
-			// Output full var line
-			$('.oStream').append(count[i]+'<br/>');
-			
-			// Push occurances to array
-			
-			// Trim to var name only and format for injection
-			var trimToNameOnly = count[i].replace(/^\s/, '').split(' ')[1];
-			$('.oStream').append("alert\('"+trimToNameOnly+"\')\;<br/>");
-		}
-	});
-	
-// ********************************************************
-});  // END - Function | Execute after DOM has loaded
-// ********************************************************
+
+
+
+        // (Flush) De'bug Injector
+        $('#triggerFlush').click(function () {
+            $('#utv').empty().html("");
+        });
+
+        // (Fill) De'bug Injector
+        $('#triggerFill').click(function () {
+            // Clear Output stage
+            $('#utv').empty();
+
+            // Get data from textarea
+            var textarea = $('textarea#iTextarea').val();
+            // Find all instances of "var...;"
+            var regex = new RegExp('var(.*?);', 'gi');
+            var count = textarea.match(regex);
+
+            // Store all occurances as array
+            var storeIt = [];
+
+            // Inject Helper Function
+            var functHelper = 'function utv(utv, utv1) {' +
+                    'if (utv1) {' +
+                    '\document\.getElementById\(\'utv\'\).innerHTML += "\<span\>var " + utv + " = " + utv1 + "</span>";' +
+                    '} else {' +
+                    'exit();' +
+                    '}' +
+                    '}';
+            $("textarea#iTextarea").val($("textarea#iTextarea").val().replace(/\<script\>/g, "\<script\>\n" + functHelper));
+
+
+            // Loop through var collection
+            for (i = 0; i < count.length; i++) {
+                // Output full var line
+                //$('#utv').append('<br/>' + count[i] + '<br/>');
+
+            // Push occurances to array
+
+                // Trim to var name only and format for injection
+                var trimToNameOnly = count[i].replace(/^\s/, '').split(' ')[1];
+                //$('#utv').append("alert\('" + trimToNameOnly + "\')\;<br/>");
+                //$('#utv').append("utv\(\"" + trimToNameOnly + "\","+trimToNameOnly+")\;\nexit\(\)\;\n");
+                //var alertInsert = "utv\(\"" + trimToNameOnly + "\"," + trimToNameOnly + ")\;\nexit\(\)\;\n"
+                var alertInsert = "utv\(\"" + trimToNameOnly + "\"," + trimToNameOnly + ")\;\n";
+                $("textarea#iTextarea").val($("textarea#iTextarea").val().replace(/\<\/script\>/g, "\n" + alertInsert + "\<\/script\>\n"));
+                //$("textarea#iTextarea").append(alertInsert);
+                //var testing = "console.log(\"It worked!\");";
+                //$("textarea#iTextarea").val($("textarea#iTextarea").val().replace(/\;/g, "\;\n" + testing + "\n"));
+            }
+            // Execute real-time preview of javascript (after dom injection of debuggers)
+            var value = $('.iStream').val();
+            var contentAttr = $('.iStream').attr('name');
+            $('.'+contentAttr+'').append(value);
+
+            // Remove all injected nodes on exit
+            var regexTwo = new RegExp('utv(.*?);', 'gi');
+            var regexThree = new RegExp('function(.*?)\}\}', 'gi');
+            $("textarea#iTextarea").val($("textarea#iTextarea").val().replace(regexThree, "").replace(regexTwo, "").replace(/ +(?= )/i, '').replace(/\n+/g, '\n'));
+        });
+
+    // ********************************************************
+    }); // END - Function | Execute after DOM has loaded
+    // ********************************************************
 </script>
 
 </body>
