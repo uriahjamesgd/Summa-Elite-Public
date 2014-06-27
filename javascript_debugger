@@ -144,7 +144,23 @@
     $(function () { // Function | Execute after DOM has loaded
     // ********************************************************
 
+            // Unit Test Function
+            function utf() {
+                if(this) {
+                    document.getElementById('utf').innerHTML += "<span>Function " + arguments.callee.caller.name + "</span>";
+                } else {
+                    exit();
+                }
+            }
 
+            // Unit Test Variable
+            function utv(utv,utv1) {
+                if(utv1) {
+                    document.getElementById('utv').innerHTML += "<span>var " + utv + " = " + utv1 + "</span>";
+                } else {
+                    exit();
+                }
+            }
 
 
         // (Flush) De'bug Injector
