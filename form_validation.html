@@ -121,6 +121,13 @@ $(function () {  // Function | Execute after DOM has loaded
 				else {
 					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });	
+			// Error check [form type=password]
+            $("#"+form_id_closest+" input[type=password]").each(function() {
+				if((this.value).length===0) {
+					$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
+				else {
+					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
+            });	
 			// Error check [form type=textarea]
             $("#"+form_id_closest+" textarea").each(function() {
 				if((this.value)==0) {
@@ -162,22 +169,27 @@ $(function () {  // Function | Execute after DOM has loaded
 			var input_text = $("#"+form_id_closest+" input[type=text]").filter(function () {
 				return $(this).val() !== '';
 			}).length;	
+                        // Count[form type=password] if filled
+			var input_password = $("#"+form_id_closest+" input[type=password]").filter(function () {
+				return $(this).val() !== '';
+			}).length;	
 			// Count[form type=textarea] if filled
 			var input_textarea = $("#"+form_id_closest+" textarea").filter(function () {
 				return $(this).val() !== '';
 			}).length;		
 			// Count Tally all counts
-			var tallySelectedInputs = input_checkbox+input_radio+input_text+input_textarea+input_select; 
+			var tallySelectedInputs = input_checkbox+input_radio+input_text+input_password+input_textarea+input_select; 
   			// Count Total Inputs
 			var ttl_select = $("#"+form_id_closest+" select").length;
 			var ttl_text = $("#"+form_id_closest+" input[type=text]").length;
+                        var ttl_password = $("#"+form_id_closest+" input[type=password]").length;
 			var ttl_textarea = $("#"+form_id_closest+" textarea").length;
 			var ttl_radio = $("#"+form_id_closest+" input[type=radio]").length;
 			switch (true) {case ttl_radio == 1:var ttl_radio = 1;break;case ttl_radio >= 2:var ttl_radio = 1;break;default:var ttl_radio = 0;break;}
 			var ttl_checkbox = $("#"+form_id_closest+" input[type=checkbox]").length;
 			switch (true) {case ttl_checkbox == 1:var ttl_checkbox = 1;break;case ttl_checkbox >= 2:var ttl_checkbox = 1;break;default:var ttl_checkbox = 0;break;}			
 			// Count Total Inputs
-			var count_total_inputs = ttl_select+ttl_text+ttl_textarea+ttl_radio+ttl_checkbox;			
+			var count_total_inputs = ttl_select+ttl_text+ttl_password+ttl_textarea+ttl_radio+ttl_checkbox;			
 			// Header Error Message: Global Error Message
 			if (tallySelectedInputs !== count_total_inputs) {
 				$("#"+form_id_closest).prepend('<span class="frmWarning"><span class="frmWarning_red">'+ico_err+'</span> Please fix the field(s) marked in RED below.</span>');}			
@@ -193,7 +205,7 @@ $(function () {  // Function | Execute after DOM has loaded
         };
 		// Trigger Form Validate Event-Suite
 		$('input[type=submit]').on('click', validateForms);
-		$('input[type=checkbox],input[type=radio],input[type=text],textarea,select').bind('change', validateForms);
+		$('input[type=checkbox],input[type=radio],input[type=text],input[type=password],textarea,select').bind('change', validateForms);
 	}  // exe_frmValidate
 	
 	// Call Form Validation Function
