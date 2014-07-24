@@ -5,19 +5,82 @@
 <title>Global Form Validation Script</title>
 
 <style type="text/css">
-body {margin:100px;font-family:Tahoma, Geneva, sans-serif;font-size:.75em;}
-.frmErr {font-family:Tahoma, Geneva, sans-serif;color:#ff0000;padding:3px 6px 3px 0;font-size:1em;line-height:1em;position:absolute;margin-left:-12px;display:inline;}
-.frmValid {font-family:Tahoma, Geneva, sans-serif;color:#390;padding:3px 6px 3px 0;font-size:1em;line-height:1em;font-weight:bold;position:absolute;margin-left:-12px;display:inline;}
-.frmWarning {font-weight:bold;font-family:Tahoma, Geneva, sans-serif;color:#222222;padding:0 0;font-size:1.2em;line-height:1em;position:relative;z-index:100;display:inline-block;margin:15px 0;}
-.frmWarning_red {font-family:Tahoma, Geneva, sans-serif;color:#ff0000;font-size:2em;position:relative;top:6px;}
-.frmVictory {font-weight:bold;font-family:Tahoma, Geneva, sans-serif;color:#222222;padding:0 0;font-size:1.2em;line-height:1em;position:relative;z-index:100;display:inline-block;margin:15px 0;}
-.frmVictory_green {font-family:Tahoma, Geneva, sans-serif;color:#390;font-size:2em;position:relative;top:6px;}
+body {margin:100px;
+        font-family:Tahoma, Geneva, sans-serif;
+        font-size:.75em;
+}
+form {
+	position:relative;	
+}
+.frmErr {
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#ff0000;
+	padding:3px 6px 3px 0;
+	font-size:1em;
+	line-height:1em;
+	position:absolute;
+	margin-left:-12px;
+	display:inline;
+}
+.frmValid {
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#390;
+	padding:3px 6px 3px 0;
+	font-size:1em;
+	line-height:1em;
+	font-weight:bold;
+	position:absolute;
+	margin-left:-12px;
+	display:inline;
+}
+.frmWarning {
+	font-weight:bold;
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#222222;
+	padding:3px 8px 8px 8px;
+	font-size:1.2em;
+	line-height:1em;
+	position:absolute;
+	top:-60px;
+	z-index:100;
+	display:inline-block;
+	margin:15px 0;
+	background-color:#eeeeee;
+	border:1px solid #dddddd;
+	border-radius:4px;
+}
+.frmWarning_red {
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#ff0000;
+	font-size:2em;
+	position:relative;
+	top:6px;
+}
+.frmVictory {
+	font-weight:bold;
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#222222;
+	padding:0 0;
+	font-size:1.2em;
+	line-height:1em;
+	position:absolute;
+	top:0;
+	z-index:100;
+	display:inline-block;
+	margin:15px 0;
+}
+.frmVictory_green {
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#390;
+	font-size:2em;
+	position:relative;
+	top:6px;
+}
 </style>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
-
 // ********************************************************
 $(function () {  // Function | Execute after DOM has loaded
 // ********************************************************
@@ -114,10 +177,10 @@ $(function () {  // Function | Execute after DOM has loaded
 			var count_total_inputs = ttl_select+ttl_text+ttl_textarea+ttl_radio+ttl_checkbox;			
 			// Header Error Message: Global Error Message
 			if (tallySelectedInputs !== count_total_inputs) {
-				$("#"+form_id_closest).before('<span class="frmWarning"><span class="frmWarning_red">'+ico_err+'</span> Please fix the field(s) marked in RED below.</span>');}			
+				$("#"+form_id_closest).prepend('<span class="frmWarning"><span class="frmWarning_red">'+ico_err+'</span> Please fix the field(s) marked in RED below.</span>');}			
 			// Header Valid Message: Global Valid Message
 			if (tallySelectedInputs === count_total_inputs) {
-				$("#"+form_id_closest).before('<span class="frmVictory"><span class="frmVictory_green">'+ico_val+'</span> You\'re good!</span>');}		
+				$("#"+form_id_closest).prepend('<span class="frmVictory"><span class="frmVictory_green">'+ico_val+'</span> You\'re good!</span>');}		
 			// Header Error Message: Highlight on Error Submit
 			$(".frmWarning").effect("highlight", {}, 3000);			
 			// Process if Tally selected equals total form inputs
