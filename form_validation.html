@@ -45,78 +45,79 @@ $(function () {  // Function | Execute after DOM has loaded
 			$('.frmValid').remove();
 			$('.frmWarning').remove();
 			$('.frmVictory').remove();			
-			// Get Parent Form ID of Input Button
-			var form_id = $(this).parent("form").attr('id');			
+			// Get Parent Form ID of Input Button		
+			var form_id_closest = $(this).closest("form").attr('id');
+				
 			// Error check [form type=text]
-            $("form#"+form_id+" > input[type=text]").each(function() {
-				if((this.value)==0) {
+            $("#"+form_id_closest+" input[type=text]").each(function() {
+				if((this.value).length===0) {
 					$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
 					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });	
 			// Error check [form type=textarea]
-            $("form#"+form_id+" > textarea").each(function() {
+            $("#"+form_id_closest+" textarea").each(function() {
 				if((this.value)==0) {
 					$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
 					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });				
 			// Error check [form type=select]
-            $("form#"+form_id+" > select").each(function() {
+            $("#"+form_id_closest+" select").each(function() {
 				if ((this.value)==0) {
                 	$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
 					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });			
 			// Error check [form type=checkbox]
-			$("form#"+form_id+" > input[type=checkbox]").each(function() {
-				if ($("form#"+form_id+" > input[type=checkbox]:checked").length <= 0) {
+			$("#"+form_id_closest+" input[type=checkbox]").each(function() {
+				if ($("#"+form_id_closest+" input[type=checkbox]:checked").length <= 0) {
                 	$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
 					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });			
 			// Error check [form type=radio]
-			$("form#"+form_id+" > input[type=radio]").each(function() {
-				if ($("form#"+form_id+" > input[type=radio]:checked").length <= 0) {
+			$("#"+form_id_closest+" input[type=radio]").each(function() {
+				if ($("#"+form_id_closest+" input[type=radio]:checked").length <= 0) {
                 	$(this).before('<span class="frmErr">'+ico_err+'</span>');} 
 				else {
 					$(this).before('<span class="frmValid">'+ico_val+'</span>');}
             });			
 			//  Count [form type=checkbox] if filled
-			var input_checkbox = $("form#"+form_id+" > input[type=checkbox]:checkbox:checked").length;
+			var input_checkbox = $("#"+form_id_closest+" input[type=checkbox]:checkbox:checked").length;
 			switch (true) {case input_checkbox == 1:var input_checkbox = 1;break;case input_checkbox >= 2:var input_checkbox = 1;break;default:var input_checkbox = 0;break;}			
 			// Count [form type=radio] if filled
-			var input_radio = $("form#"+form_id+" > input[type=radio]:checked").length;			
+			var input_radio = $("#"+form_id_closest+" input[type=radio]:checked").length;			
 			// Count [form type=select] if filled
-			var input_select = $('form#'+form_id+' > select').filter(function () {
+			var input_select = $("#"+form_id_closest+" select").filter(function () {
 				return $(this).val() !== '';
 			}).length;			
 			// Count[form type=text] if filled
-			var input_text = $('form#'+form_id+' > input[type=text]').filter(function () {
+			var input_text = $("#"+form_id_closest+" input[type=text]").filter(function () {
 				return $(this).val() !== '';
 			}).length;	
 			// Count[form type=textarea] if filled
-			var input_textarea = $('form#'+form_id+' > textarea').filter(function () {
+			var input_textarea = $("#"+form_id_closest+" textarea").filter(function () {
 				return $(this).val() !== '';
 			}).length;		
 			// Count Tally all counts
 			var tallySelectedInputs = input_checkbox+input_radio+input_text+input_textarea+input_select; 
   			// Count Total Inputs
-			var ttl_select = $('form#'+form_id+' > select').length;
-			var ttl_text = $('form#'+form_id+' > input[type=text]').length;
-			var ttl_textarea = $('form#'+form_id+' > textarea').length;
-			var ttl_radio = $('form#'+form_id+' > input[type=radio]').length;
+			var ttl_select = $("#"+form_id_closest+" select").length;
+			var ttl_text = $("#"+form_id_closest+" input[type=text]").length;
+			var ttl_textarea = $("#"+form_id_closest+" textarea").length;
+			var ttl_radio = $("#"+form_id_closest+" input[type=radio]").length;
 			switch (true) {case ttl_radio == 1:var ttl_radio = 1;break;case ttl_radio >= 2:var ttl_radio = 1;break;default:var ttl_radio = 0;break;}
-			var ttl_checkbox = $('form#'+form_id+' > input[type=checkbox]').length;
+			var ttl_checkbox = $("#"+form_id_closest+" input[type=checkbox]").length;
 			switch (true) {case ttl_checkbox == 1:var ttl_checkbox = 1;break;case ttl_checkbox >= 2:var ttl_checkbox = 1;break;default:var ttl_checkbox = 0;break;}			
 			// Count Total Inputs
 			var count_total_inputs = ttl_select+ttl_text+ttl_textarea+ttl_radio+ttl_checkbox;			
 			// Header Error Message: Global Error Message
 			if (tallySelectedInputs !== count_total_inputs) {
-				$("form[id="+form_id+"]").before('<span class="frmWarning"><span class="frmWarning_red">'+ico_err+'</span> Please fix the field(s) marked in RED below.</span>');}			
+				$("#"+form_id_closest).before('<span class="frmWarning"><span class="frmWarning_red">'+ico_err+'</span> Please fix the field(s) marked in RED below.</span>');}			
 			// Header Valid Message: Global Valid Message
 			if (tallySelectedInputs === count_total_inputs) {
-				$("form[id="+form_id+"]").before('<span class="frmVictory"><span class="frmVictory_green">'+ico_val+'</span> You\'re good!</span>');}		
+				$("#"+form_id_closest).before('<span class="frmVictory"><span class="frmVictory_green">'+ico_val+'</span> You\'re good!</span>');}		
 			// Header Error Message: Highlight on Error Submit
 			$(".frmWarning").effect("highlight", {}, 3000);			
 			// Process if Tally selected equals total form inputs
